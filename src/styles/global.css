@@ -1,0 +1,196 @@
+@import './tokens.css';
+
+/* Self-hosted variable fonts (latin subset, SIL OFL). Space Grotesk is preloaded in index.html. */
+@font-face {
+  font-family: 'Space Grotesk Variable';
+  src: url('/fonts/space-grotesk-var-latin.woff2') format('woff2-variations');
+  font-weight: 300 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter Variable';
+  src: url('/fonts/inter-var-latin.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-display: swap;
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: var(--nav-h);
+  }
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  body {
+    font-family: 'Inter Variable', system-ui, sans-serif;
+    font-size: var(--fs-body);
+    line-height: 1.6;
+    overflow-x: clip;
+    background: var(--bg-dark);
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: 'Space Grotesk Variable', system-ui, sans-serif;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  h1 {
+    font-size: var(--fs-h1);
+  }
+  h2 {
+    font-size: var(--fs-h2);
+  }
+  h3 {
+    font-size: var(--fs-h3);
+    font-weight: 600;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--accent-primary);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  section[tabindex='-1']:focus {
+    outline: none;
+  }
+  ::selection {
+    background: rgba(59, 130, 246, 0.35);
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-content px-4 sm:px-6 lg:px-8;
+  }
+  .section-y {
+    @apply py-20 md:py-28;
+  }
+  .text-gradient {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .eyebrow {
+    @apply mb-4 inline-block font-heading text-sm font-semibold uppercase tracking-[0.18em] text-accent;
+  }
+  /* Gradient-border shimmer for buttons: a rotating conic gradient behind a 1px inset. */
+  .shimmer-border {
+    position: relative;
+    isolation: isolate;
+  }
+  .shimmer-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(110deg, transparent 20%, #3b82f6 40%, #f97316 60%, transparent 80%);
+    background-size: 250% 100%;
+    background-position: 100% 0;
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .shimmer-border:hover::before,
+  .shimmer-border:focus-visible::before {
+    opacity: 1;
+    animation: shimmer 1.6s linear infinite;
+  }
+  /* Spotlight that follows the cursor inside service cards (positions set by useSpotlight). */
+  .spotlight::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      320px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(59, 130, 246, 0.16),
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .spotlight:hover::after {
+    opacity: 1;
+  }
+  .glass {
+    background: rgba(10, 11, 16, 0.7);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+  .hero-fallback {
+    background: radial-gradient(55% 55% at 62% 45%, rgba(59, 130, 246, 0.55), transparent 70%),
+      radial-gradient(35% 35% at 78% 65%, rgba(249, 115, 22, 0.35), transparent 70%),
+      radial-gradient(40% 40% at 50% 60%, rgba(139, 92, 246, 0.35), transparent 70%);
+  }
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -150% 0;
+  }
+}
+@keyframes shake {
+  10%,
+  90% {
+    transform: translateX(-1px);
+  }
+  20%,
+  80% {
+    transform: translateX(3px);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translateX(-5px);
+  }
+  40%,
+  60% {
+    transform: translateX(5px);
+  }
+}
+.animate-shake {
+  animation: shake 0.4s ease both;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Global safety net: if the user asks for reduced motion, CSS animations stop too. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.15s !important;
+    scroll-behavior: auto !important;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}

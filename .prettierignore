@@ -1,0 +1,4 @@
+dist
+node_modules
+public/lottie
+package-lock.json

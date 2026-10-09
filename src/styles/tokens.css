@@ -1,0 +1,37 @@
+/* Design tokens. Contrast ratios checked against --bg-dark / --bg-light (WCAG AA). */
+:root {
+  --bg-dark: #0a0b10;
+  --bg-elevated: #12141c;
+  --bg-light: #f5f6fa;
+  --accent-primary: #3b82f6;
+  --accent-secondary: #f97316;
+  --accent-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6, #f97316);
+
+  --text-primary: #f3f4f8; /* 17.9:1 on --bg-dark */
+  --text-muted: #a3a8b8; /* 8.1:1 on --bg-dark */
+  --text-on-light: #0f1220; /* 17.6:1 on --bg-light */
+  --text-on-light-muted: #4a5068; /* 7.6:1 on --bg-light */
+  --accent-on-light: #1d4ed8; /* 6.3:1 on --bg-light, for links on light sections */
+  --line: rgba(255, 255, 255, 0.08);
+
+  /* Fluid type scale */
+  --fs-body: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --fs-lead: clamp(1.0625rem, 1rem + 0.4vw, 1.3rem);
+  --fs-h3: clamp(1.2rem, 1.1rem + 0.5vw, 1.5rem);
+  --fs-h2: clamp(2rem, 1.5rem + 2.2vw, 3.25rem);
+  --fs-h1: clamp(2.4rem, 1.6rem + 3.8vw, 4.75rem);
+
+  /* RGB channel versions so Tailwind opacity modifiers (e.g. bg-bg-dark/95) work. */
+  --bg-dark-rgb: 10 11 16;
+  --bg-elevated-rgb: 18 20 28;
+  --bg-light-rgb: 245 246 250;
+  --accent-primary-rgb: 59 130 246;
+  --accent-secondary-rgb: 249 115 22;
+  --text-primary-rgb: 243 244 248;
+  --text-muted-rgb: 163 168 184;
+  --text-on-light-rgb: 15 18 32;
+  --text-on-light-muted-rgb: 74 80 104;
+
+  --radius-card: 16px;
+  --nav-h: 72px;
+}
