@@ -14,7 +14,11 @@ export function scrollToId(id: string) {
   // Move keyboard focus to the target section for screen reader and keyboard users.
   el.setAttribute('tabindex', '-1');
   el.focus({ preventScroll: true });
-  history.replaceState(null, '', `#${id}`);
+  try {
+    history.replaceState(null, '', `#${id}`);
+  } catch {
+    /* sandboxed frames may refuse history updates; scrolling already happened */
+  }
 }
 
 /**

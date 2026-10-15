@@ -9,7 +9,9 @@ import { Confetti } from '../ui/Confetti';
 import { Field, inputClass as input, ServicesField } from '../ui/FormFields';
 
 export function ContactForm() {
-  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error' | 'preview'>(
+    'idle',
+  );
   const {
     register,
     handleSubmit,
@@ -30,6 +32,11 @@ export function ContactForm() {
     errors[name] ? 'border-[#f87171]' : 'border-white/15';
 
   const onSubmit = async (data: ContactInput) => {
+    // Static preview builds have no backend: show a clear notice instead of an error.
+    if (import.meta.env.VITE_PREVIEW_MODE === '1') {
+      setStatus('preview');
+      return;
+    }
     setStatus('sending');
     try {
       const res = await fetch('/api/contact', {
@@ -164,6 +171,11 @@ export function ContactForm() {
                 )}
                 {status === 'sending' ? 'Sending…' : 'Send message'}
               </motion.button>
+              {status === 'preview' && (
+                <p role="status" className="text-sm text-text-muted">
+                  This is a preview, so messages aren&apos;t sent yet. Your details look valid.
+                </p>
+              )}
               {status === 'error' && (
                 <p role="alert" className="text-sm text-[#fca5a5]">
                   Something went wrong. Please try again, or email us at {site.email}.

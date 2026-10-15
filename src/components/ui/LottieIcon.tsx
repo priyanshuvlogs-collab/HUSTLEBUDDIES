@@ -28,7 +28,7 @@ export function LottieIcon({ name, hovered }: Props) {
   useEffect(() => {
     if (!inView || data) return;
     let cancelled = false;
-    fetch(`/lottie/${name}.json`)
+    fetch(`${import.meta.env.BASE_URL}lottie/${name}.json`)
       .then((r) => r.json())
       .then((json) => !cancelled && setData(json))
       .catch(() => undefined);
