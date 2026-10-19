@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { howWeWork } from '../../content';
 import { useCanRender3D } from '../../hooks/useCanRender3D';
 import { useGsap } from '../../hooks/useGsap';
@@ -11,6 +11,11 @@ const ParticleScene = lazy(() => import('../three/ParticleScene'));
 export function HowWeWork() {
   const can3D = useCanRender3D();
   const [bgRef, inView] = useInView<HTMLDivElement>({ rootMargin: '100px' });
+  // Create the WebGL context once, on first view; afterwards only pause/resume it.
+  const [seen, setSeen] = useState(false);
+  useEffect(() => {
+    if (inView) setSeen(true);
+  }, [inView]);
 
   const scope = useGsap<HTMLElement>(({ reduced, desktop, scope }) => {
     const track = scope.querySelector<HTMLElement>('[data-track]')!;
@@ -81,7 +86,7 @@ export function HowWeWork() {
       className="relative overflow-hidden bg-bg-dark lg:flex lg:min-h-screen lg:items-center"
     >
       <div ref={bgRef} aria-hidden="true" className="absolute inset-0 opacity-70">
-        {can3D && inView && (
+        {can3D && seen && (
           <Suspense fallback={null}>
             <ParticleScene active={inView} />
           </Suspense>

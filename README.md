@@ -33,6 +33,13 @@ npm run dev        # http://localhost:5173 (the /api/contact endpoint works loca
 need to touch components. That includes the hero, services, process steps, results,
 about/team, FAQ, contact copy, and footer links.
 
+- **Blog posts (Insights section):** `src/content/posts.ts`. Each post is a list of
+  blocks (`p`, `h2`, `ul`, `note`). Add a post by appending an object with a unique
+  `slug`; it gets a card on the home page and a shareable link at `/#post-<slug>`.
+- **Reading list:** `src/content/books.ts` (title, author, year, topic, one-line reason).
+  Covers are drawn in CSS, so no images are needed.
+- **Launch posts:** ready-to-paste LinkedIn, X, Instagram and WhatsApp copy is in
+  [`LAUNCH_POSTS.md`](./LAUNCH_POSTS.md).
 - **Form options** (budget ranges, services list): `src/lib/schema.ts`. These are shared
   by the browser form and the server, so validation stays in sync.
 - **Results:** set each item's `value` to a verified number to turn on the counter

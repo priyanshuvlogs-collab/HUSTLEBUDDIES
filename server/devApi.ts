@@ -16,7 +16,10 @@ export function devApi(): Plugin {
     middlewares.use('/api/contact', (req, res, next) => {
       if (req.method !== 'POST') return next();
       let raw = '';
-      req.on('data', (chunk) => (raw += chunk));
+      req.on('data', (chunk) => {
+        raw += chunk;
+        if (raw.length > 20_000) req.destroy(); // handler rejects >10KB anyway
+      });
       req.on('end', async () => {
         const { status, body } = await handleContact(raw, process.env);
         res.statusCode = status;

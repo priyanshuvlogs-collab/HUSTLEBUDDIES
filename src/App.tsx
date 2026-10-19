@@ -9,6 +9,8 @@ import { Contact } from './components/sections/Contact';
 import { FAQ } from './components/sections/FAQ';
 import { Hero } from './components/sections/Hero';
 import { HowWeWork } from './components/sections/HowWeWork';
+import { Insights } from './components/sections/Insights';
+import { Reading } from './components/sections/Reading';
 import { Results } from './components/sections/Results';
 import { Services } from './components/sections/Services';
 import { useLenis } from './hooks/useLenis';
@@ -34,6 +36,8 @@ export default function App() {
         <HowWeWork />
         <Results />
         <About />
+        <Insights />
+        <Reading />
         <FAQ />
         <Contact />
       </main>

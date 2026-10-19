@@ -35,7 +35,7 @@ export const contactSchema = z.object({
   services: z.array(z.enum(SERVICE_OPTIONS)).min(1, 'Pick at least one service'),
   message: z.string().trim().min(10, 'Tell us a little more (10+ characters)').max(2000),
   // Honeypot: real users never see or fill this field.
-  botField: z.string().max(0).optional(),
+  botField: z.string().max(200).optional(),
 });
 
 export type ContactInput = z.infer<typeof contactSchema>;

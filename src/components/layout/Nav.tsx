@@ -45,7 +45,7 @@ export function Nav() {
             <Logo />
           </a>
 
-          <ul className="hidden items-center gap-1 lg:flex">
+          <ul className="hidden items-center gap-1 xl:flex">
             {nav.links.map((link) => (
               <li key={link.id} className="relative">
                 <a
@@ -83,7 +83,7 @@ export function Nav() {
             </MagneticButton>
             <button
               type="button"
-              className="relative z-50 grid h-11 w-11 place-items-center rounded-full border border-white/15 lg:hidden"
+              className="relative z-50 grid h-11 w-11 place-items-center rounded-full border border-white/15 xl:hidden"
               aria-expanded={open}
               aria-controls="mobile-menu"
               aria-label={open ? 'Close menu' : 'Open menu'}

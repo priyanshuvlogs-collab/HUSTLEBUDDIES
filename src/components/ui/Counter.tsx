@@ -41,7 +41,11 @@ export function Counter({ value, suffix = '', duration = 1.6 }: Props) {
   }, [inView, reduced, value, duration]);
 
   return (
-    <span ref={ref} aria-label={`${value}${suffix}`}>
+    <span ref={ref}>
+      <span className="sr-only">
+        {value}
+        {suffix}
+      </span>
       <span ref={out} aria-hidden="true">
         0
       </span>

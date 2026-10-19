@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { nav } from '../../content';
-import { scrollToId } from '../../hooks/useLenis';
+import { scrollToId, setScrollLock } from '../../hooks/useLenis';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 interface Props {
@@ -42,10 +42,13 @@ export function MobileMenu({ open, onClose }: Props) {
       }
     };
     document.addEventListener('keydown', onKey);
-    document.body.style.overflow = 'hidden';
+    setScrollLock(true);
     return () => {
       document.removeEventListener('keydown', onKey);
-      document.body.style.overflow = '';
+      setScrollLock(false);
+      // Links unmount on close; put focus back somewhere sensible.
+      if (!el?.contains(document.activeElement) && document.activeElement !== document.body) return;
+      toggle?.focus({ preventScroll: true });
     };
   }, [open, onClose]);
 
@@ -61,9 +64,9 @@ export function MobileMenu({ open, onClose }: Props) {
           ref={panel}
           id="mobile-menu"
           role="dialog"
-          aria-modal="true"
           aria-label="Site menu"
-          className="fixed inset-0 z-40 flex flex-col bg-bg-dark/95 px-6 pb-10 pt-28 backdrop-blur-xl lg:hidden"
+          data-lenis-prevent
+          className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-bg-dark/95 px-6 pb-10 pt-28 backdrop-blur-xl xl:hidden"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

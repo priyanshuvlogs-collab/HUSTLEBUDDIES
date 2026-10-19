@@ -1,12 +1,11 @@
-/** Strip HTML tags and control characters from user input before it leaves the server. */
+/**
+ * Remove control characters from user input before it leaves the server.
+ * Text such as "<$2k/mo" is kept as typed: the payload is sent as JSON, so any
+ * system that displays it must escape it (never render it as raw HTML).
+ */
 export function sanitizeText(value: string): string {
-  return (
-    value
-      .replace(/<[^>]*>/g, '')
-      // eslint-disable-next-line no-control-regex
-      .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '')
-      .trim()
-  );
+  // eslint-disable-next-line no-control-regex
+  return value.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '').trim();
 }
 
 export function sanitizeDeep<T>(input: T): T {

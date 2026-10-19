@@ -42,7 +42,7 @@ export function Footer() {
         </div>
         <nav aria-label="Footer" className="grid gap-8 sm:grid-cols-2">
           <ul className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
-            {nav.links.map((l) => (
+            {[...nav.links, { id: 'reading', label: 'Reading list' }].map((l) => (
               <li key={l.id}>
                 <a
                   href={`#${l.id}`}

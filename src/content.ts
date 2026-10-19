@@ -22,6 +22,7 @@ export const nav = {
     { id: 'how-we-work', label: 'How We Work' },
     { id: 'results', label: 'Results' },
     { id: 'about', label: 'About' },
+    { id: 'insights', label: 'Insights' },
     { id: 'faq', label: 'FAQ' },
     { id: 'contact', label: 'Contact' },
   ],

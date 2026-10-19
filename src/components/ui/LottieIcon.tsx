@@ -37,11 +37,18 @@ export function LottieIcon({ name, hovered }: Props) {
     };
   }, [inView, name, data]);
 
+  // Reduced motion: hold the final frame. Layers stop drawing at their out-point,
+  // so the last visible frame is totalFrames - 1, not totalFrames.
+  const showFinalFrame = () => {
+    const l = lottie.current;
+    if (l) l.goToAndStop(Math.max(0, (l.getDuration(true) ?? 1) - 1), true);
+  };
+
   useEffect(() => {
     const l = lottie.current;
     if (!l || !data) return;
     if (reduced) {
-      l.goToAndStop(l.getDuration(true) ?? 0, true);
+      showFinalFrame();
       return;
     }
     // Loop while hovered; on leave, the current cycle finishes and stops.
@@ -58,6 +65,7 @@ export function LottieIcon({ name, hovered }: Props) {
             animationData={data}
             loop={false}
             autoplay={!reduced}
+            onDOMLoaded={reduced ? showFinalFrame : undefined}
             rendererSettings={{ preserveAspectRatio: 'xMidYMid meet' }}
           />
         </Suspense>

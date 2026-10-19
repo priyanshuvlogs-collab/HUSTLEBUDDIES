@@ -59,6 +59,8 @@ export async function handleContact(
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
+      // Fail fast instead of hanging until the platform kills the function.
+      signal: AbortSignal.timeout(8000),
     });
     if (!res.ok) throw new Error(`Webhook responded ${res.status}`);
     return { status: 200, body: { ok: true } };
